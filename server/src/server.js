@@ -14,7 +14,15 @@ const app = express();
 
 app.use(express.json());
 
-app.use(cors());
+if (process.env.NODE_ENV !== "production") {
+  console.log("NODE_ENV", process.env.NODE_ENV);
+  app.use(cors({ 
+    origin: [
+      "http://localhost:4200", 
+      "http://localhost:5173"
+    ] 
+  }));
+}
 
 app.use("/todos", todoRouter);
 
